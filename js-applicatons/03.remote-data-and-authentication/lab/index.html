@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/auth.html">Login / Register</a>
+    <form id="post">
+      <label>Person: <input type="text" name="person" /></label>
+      <label>Phone: <input type="text" name="phone" /></label>
+      <input type="submit" value="Create Record" />
+    </form>
+
+    <script>
+      const formCreate = document.querySelector("#post");
+
+      formCreate.addEventListener("submit", onCreate);
+
+      async function onCreate(event) {
+        event.preventDefault();
+        const data = new FormData(formCreate);
+
+        const person = data.get("person").trim();
+        const phone = data.get("phone").trim();
+
+        const record = {
+          person,
+          phone,
+        };
+        await postData(record);
+        formCreate.reset();
+        alert("Record created");
+      }
+
+      // POST
+      async function postData(data) {
+        const url = "http://localhost:3030/jsonstore/phonebook/";
+
+        const options = {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+        const res = await fetch(url, options);
+        const result = await res.json();
+        return result;
+      }
+      //GET
+      async function getData() {
+        const url = "http://localhost:3030/jsonstore/phonebook/";
+        const options = {headers:{}};
+        const token = sessionStorage.getItem("token");
+        if(token != null){
+          options.headers['X-Authorization'] = token
+        }
+        const res = await fetch(url, options);
+        const data = await res.json();
+        return data;
+      }
+      // GET by ID
+      async function getDataById(id) {
+        const url = "http://localhost:3030/jsonstore/phonebook/" + id;
+        const options = { headers: {} };
+        if (token !== null) {
+          options.headers["X-Authorization"] = token;
+        }
+        const res = await fetch(url);
+        const data = await res.json();
+        return data;
+      }
+      // PUT
+      async function updateData(id, data) {
+        const url = "http://localhost:3030/jsonstore/phonebook/" + id;
+        const options = {
+          method: "put",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+        const res = await fetch(url, options);
+        const result = await res.json();
+        return result;
+      }
+      // DELETE
+      async function deleteData(id) {
+        const url = "http://localhost:3030/jsonstore/phonebook/" + id;
+        const options = {
+          method: "delete",
+        };
+        const res = await fetch(url, options);
+        const result = await res.json();
+        return result;
+      }
+    </script>
+  </body>
+</html>

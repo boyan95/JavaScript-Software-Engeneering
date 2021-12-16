@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authorization</title>
+    <style>
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Register</h2>
+    <form id="register-form">
+      <label>Email: <input type="text" name="email" /></label>
+      <label>Password: <input type="password" name="password" /></label>
+      <label>Repass: <input type="password" name="repass" /></label>
+      <input type="submit" value="Register" />
+    </form>
+    <br />
+    <br />
+    <br />
+    <br />
+    <h2>Login</h2>
+    <form id="login-form">
+      <label>Email: <input type="text" name="email" /></label>
+      <label>Password: <input type="text" name="password" /></label>
+      <input type="submit" value="Login" />
+    </form>
+    <script>
+      // find the register input field- register button
+      const registerForm = document.querySelector("#register-form");
+      // find the login input field- login button
+      const loginForm = document.querySelector("#login-form");
+
+      // add eventListener for the register Button with SUBMIT
+      registerForm.addEventListener("submit", onRegister);
+      // add eventListener for the login Button with SUBMIT
+      loginForm.addEventListener("submit", onLogin);
+
+      // create async function that register new user
+      async function onRegister(event) {
+        // prevent the page to reload
+        event.preventDefault();
+        // url
+        const url = "http://localhost:3030/users/register";
+        // to get the info we use te API FromData
+        const formData = new FormData(registerForm);
+        // get every single register-form input and trim it
+        const email = formData.get("email").trim();
+        const password = formData.get("password").trim();
+        const repass = formData.get("repass").trim();
+        if (
+          password == repass &&
+          email.value != "" &&
+          password.value != "" &&
+          repass.value != ""
+        ) {
+          try {
+            // create POST order
+            const res = await fetch(url, {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email,
+                password,
+              }),
+            });
+            if (res != 200) {
+              const error = await res.json();
+              throw new Error(`Error:${error.message}`);
+            }
+            const result = await res.json();
+            console.log(result);
+
+            const token = result.accessToken;
+            sessionStorage.setItem("token", token);
+            
+          } catch (err) {
+            alert(err.message);
+          }
+        } else if(password == repass &&
+          email.value != "" &&
+          password.value != "" &&
+          repass.value != ""){
+          alert(`Error: There is some empty input field! Please fill all input field.`);
+          throw new Error(`Error: There is some empty input field! Please fill all input field.`);
+        }else if(password != repass ||
+          email.value == "" ||
+          password.value == "" ||
+          repass.value == ""){
+          alert(`Error: Both passwords do not match!`);
+          throw new Error(`Error: Both passwords do not match!`);
+          
+        }
+      }
+
+      // create async function that login an existing user
+      async function onLogin(event) {
+        // prevent the page to reload
+        event.preventDefault();
+        // url
+        const url = "http://localhost:3030/users/login";
+        // to get the info we use te API FromData
+        const formData = new FormData(loginForm);
+        // get every single login-form input and trim it
+        const email = formData.get("email").trim();
+        const password = formData.get("password").trim();
+        try {
+          // create POST order
+          const res = await fetch(url, {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          });
+          if (res.status != 200) {
+            const error = await res.json();
+            throw new Error(`Error: ${error.message}`);
+          }
+          const result = await res.json();
+          const token = result.accessToken;
+          sessionStorage.setItem("token", token);
+          window.location = "/index.html";
+        } catch (err) {
+          alert(err.message);
+        }
+      }
+    </script>
+  </body>
+</html>
