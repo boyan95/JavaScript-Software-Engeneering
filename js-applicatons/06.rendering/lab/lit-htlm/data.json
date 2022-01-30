@@ -1,0 +1,21 @@
+[
+    {
+    "title": "First Article",
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, dignissimos animi? Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+    "Author": "John Smith",
+    "comments":[]
+},
+{
+    "title": "Second Article",
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, dignissimos animi? Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+    "Author": "Peter Mayer",
+    "comments":[]
+},
+{
+    "title": "Third Article",
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, dignissimos animi? Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+    "Author": "Marie Curie",
+    "comments":[]
+}
+    
+]
