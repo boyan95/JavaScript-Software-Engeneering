@@ -20,11 +20,11 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="https://softuni.bg/trainings/2838/js-advanced-may-2020" rel="nofollow"> JS Advanced </a></td>
+<td><a href="https://softuni.bg/trainings/3487/js-advanced-september-2021" rel="nofollow"> JS Advanced </a></td>
 <td><a href="https://softuni.bg/certificates/details/114752/6795d645" rel="nofollow"> Link </a></td>
 </tr>
 <tr>
-<td><a href="https://softuni.bg/trainings/2840/js-applications-june-2020" rel="nofollow"> JS Applications </a></td>
+<td><a href="https://softuni.bg/trainings/3488/js-applications-october-2021" rel="nofollow"> JS Applications </a></td>
 <td><a href="https://softuni.bg/certificates/details/120854/71d5e332" rel="nofollow"> Link </a></td>
 </tr>
 </tbody>
